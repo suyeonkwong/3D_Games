@@ -13,10 +13,19 @@ class MyWindow(QMainWindow, form_class):
         super().__init__()
         self.setupUi(self)
         self.pb.clicked.connect(self.my_clicked)
+        self.le_mine.returnPressed.connect(self.myenter)
+        
+    def myenter(self):
+        self.doGame()
         
     def my_clicked(self):
         
-        mine = ""
+        self.doGame()
+                        
+ 
+    def doGame(self):
+        
+        mine = self.le_mine.text()
         comp = ""
         result = ""
         
@@ -26,17 +35,17 @@ class MyWindow(QMainWindow, form_class):
         else :
             comp = "짝"
         
-        self.le_com.setText(comp)
-        
-        mine = self.le_mine.text()
-       
+         
         if mine == comp :
             result = "승리"
         else :
             result = "패배"
         
+        self.le_com.setText(comp)
         self.le_result.setText(result)
-                        
+            
+            
+ 
  
 if __name__ =='__main__':
     app = QApplication(sys.argv)

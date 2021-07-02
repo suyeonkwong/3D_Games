@@ -4,69 +4,51 @@ from PyQt5 import uic
 from PyQt5.QtCore import *
 from PyQt5 import QtCore, QtGui, QtWidgets
 from random import random
-from PyQt5.QtWidgets import QMessageBox
 
  
-form_class = uic.loadUiType('myqt09.ui')[0]
+form_class = uic.loadUiType('myqt08.ui')[0]
  
 class MyWindow(QMainWindow, form_class):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.pb1.clicked.connect(self.clicked1)
-        self.pb2.clicked.connect(self.clicked2)
-        self.pb3.clicked.connect(self.clicked3)
-        self.pb4.clicked.connect(self.clicked4)
-        self.pb5.clicked.connect(self.clicked5)
-        self.pb6.clicked.connect(self.clicked6)
-        self.pb7.clicked.connect(self.clicked7)
-        self.pb8.clicked.connect(self.clicked8)
-        self.pb9.clicked.connect(self.clicked9)
-        self.pb0.clicked.connect(self.clicked0)
-        self.pb_call.clicked.connect(self.clickedpb_call)
+        self.pb.clicked.connect(self.my_clicked)
+        self.le_mine.returnPressed.connect(self.myenter)
         
-    def clicked1(self):
-        result = self.le.text()
-        self.le.setText(result + "1")
+    def my_clicked(self):
         
-    def clicked2(self):
-        result = self.le.text()
-        self.le.setText(result + "2")
+        self.doGame()
         
-    def clicked3(self):
-        result = self.le.text()
-        self.le.setText(result + "3")
+    def myenter(self):
         
-    def clicked4(self):
-        result = self.le.text()
-        self.le.setText(result + "4")
+        self.doGame()
         
-    def clicked5(self):
-        result = self.le.text()
-        self.le.setText(result + "5") 
         
-    def clicked6(self):
-        result = self.le.text()
-        self.le.setText(result + "6")  
+    def doGame(self):
         
-    def clicked7(self):
-        result = self.le.text()
-        self.le.setText(result + "7")
-        
-    def clicked8(self):
-        result = self.le.text()
-        self.le.setText(result + "8") 
-        
-    def clicked9(self):
-        result = self.le.text()
-        self.le.setText(result + "9")
-        
-    def clicked0(self):
-        result = self.le.text()
-        self.le.setText(result + "0")
-         
-    def clickedpb_call(self):
-        QMessageBox.about(self, "message", self.le.text())
+        mine = self.le_mine.text()
+        comp = ""
+        result = ""
+
+        rnd = random()
+        if rnd > 0.66 :
+            comp = "가위"
+        elif rnd > 0.33:
+            comp = "바위"
+        else :
+            comp = "보"
+   
+
+        if mine=="가위" and comp=="보" or mine=="바위" and comp=="가위" or mine=="보" and comp=="바위":
+            result = "승리"
+        elif mine == comp:
+            result = "비김"
+        else :
+            result = "패배"
+            
+        self.le_com.setText(comp)
+        self.le_result.setText(result)
+                        
  
 if __name__ =='__main__':
     app = QApplication(sys.argv)

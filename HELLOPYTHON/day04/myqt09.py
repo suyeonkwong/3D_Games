@@ -4,43 +4,37 @@ from PyQt5 import uic
 from PyQt5.QtCore import *
 from PyQt5 import QtCore, QtGui, QtWidgets
 from random import random
+from PyQt5.QtWidgets import QMessageBox
 
  
-form_class = uic.loadUiType('myqt08.ui')[0]
+form_class = uic.loadUiType('myqt09.ui')[0]
  
 class MyWindow(QMainWindow, form_class):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.pb.clicked.connect(self.my_clicked)
+        self.pb1.clicked.connect(self.clicked)
+        self.pb2.clicked.connect(self.clicked)
+        self.pb3.clicked.connect(self.clicked)
+        self.pb4.clicked.connect(self.clicked)
+        self.pb5.clicked.connect(self.clicked)
+        self.pb6.clicked.connect(self.clicked)
+        self.pb7.clicked.connect(self.clicked)
+        self.pb8.clicked.connect(self.clicked)
+        self.pb9.clicked.connect(self.clicked)
+        self.pb0.clicked.connect(self.clicked)
+        self.pb_call.clicked.connect(self.clickedpb_call)
         
-    def my_clicked(self):
-        print("1")
-        mine = ""
-        comp = ""
-        result = ""
-        print("2")
-        rnd = random()
-        if rnd > 0.66 :
-            comp = "가위"
-        elif rnd > 0.33:
-            comp = "바위"
-        else :
-            comp = "보"
-        print("3")
-        self.le_com.setText(comp)
-        print("4")
-        mine = self.le_mine.text()
+    def clicked(self):
+        str_old = self.le.text()
+        str_new = self.sender().text()
+        self.le.setText(str_old+str_new)
         
-        if mine=="가위" and comp=="보" or mine=="바위" and comp=="가위" or mine=="보" and comp=="바위":
-            result = "승리"
-        elif mine == comp:
-            result = "비김"
-        else :
-            result = "패배"
-            
-        self.le_result.setText(result)
-                        
+    def clickedpb_call(self):
+        #QMessageBox.about(self, "message", self.le.text())
+        
+        tel = self.le.text()
+        QtWidgets.QMessageBox.information(self, "Telephone", "calling" + tel)
  
 if __name__ =='__main__':
     app = QApplication(sys.argv)

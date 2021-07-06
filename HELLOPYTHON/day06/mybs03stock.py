@@ -4,12 +4,8 @@ import mariadb
 import sys
 from sqlalchemy.sql.functions import now
 from _datetime import datetime
-from time import strftime
-url = 'https://vip.mk.co.kr/newSt/rate/item_all.php'
-
-response = requests.get(url)
-response.encoding='euc-kr'
-
+from time import strftime, sleep
+import time
 try:
     conn = mariadb.connect(
         user="root",
@@ -24,25 +20,55 @@ except mariadb.Error as e:
 
 cur = conn.cursor()
 
-if response.status_code == 200:
-    html = response.text
-    soup = BeautifulSoup(html,'html.parser')
-    #code = soup.select('a[title='*']')
-    price = soup.select('.st2 + td')
-    name = soup.select('.st2 > a')
+def insertStock(s_code, c_name, price, crw_date):
+
+    sql = "INSERT INTO stock (s_code, c_name, price, crw_date) VALUES (%s, %s, %s, %s)"
+    val = (s_code, c_name, price, crw_date)
     
-    for i in range(len(price)):
-        #print(name[i].attrs["title"], name[i].text, int(price[i].text.replace(",", "")))
-        sql = "INSERT INTO stock (s_code, s_name, price, crw_date) VALUES (%s, %s, %s, %s)"
-        val = (name[i].attrs["title"], name[i].text, int(price[i].text.replace(",", "")), datetime.now().strftime('%Y%m%d.%H%M'))
-        cur.execute(sql, val)
-
+    cur.execute(sql, val)
+    
     conn.commit()
+    
 
-    print(cur.rowcount, "record inserted")
+for i in range(6):
 
-else : 
-    print(response.status_code)
+    yyyy = datetime.today().strftime("%Y%m%d.%H%M")
+    
+    URL = 'https://vip.mk.co.kr/newSt/rate/item_all.php' 
+    response = requests.get(URL) 
+    response.encoding='euc-kr'
+    html = response.text
+    
+    
+    soup = BeautifulSoup(html, 'html.parser')
+    tds = soup.select(".st2")
+    
+    
+    
+    for idx,td in enumerate(tds):
+        c_name = td.select_one("a").text
+        s_code = td.select_one("a")["title"]
+        price = td.parent.select("td")[1].text.replace(",","")
+        print(td.parent.select("td")[1].text.replace(",",""))
+        insertStock(s_code,c_name,price,yyyy)
+    
+    sleep(60)
+
+
+conn.close()
+        
+        
+    #    for i in range(len(price)):
+            #print(name[i].attrs["title"], name[i].text, int(price[i].text.replace(",", "")))
+    #        sql = "INSERT INTO stock (s_code, s_name, price, crw_date) VALUES (%s, %s, %s, %s)"
+    #        val = (name[i].attrs["title"], name[i].text, int(price[i].text.replace(",", "")), datetime.now().strftime('%Y%m%d.%H%M'))
+    #        cur.execute(sql, val)
+    
+    #    conn.commit()
+    
+    #    print(cur.rowcount, "record inserted")
+    
+   
     
 
     

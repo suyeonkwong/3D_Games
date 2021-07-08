@@ -39,8 +39,8 @@ class DaoStock:
         
 if __name__ == '__main__':
     ds = DaoStock()
-    list = ds.get_prices("삼성전자")
-    #print(list)
+    list = ds.get_name()
+    print(list)
     #ds.get_name()
     
    

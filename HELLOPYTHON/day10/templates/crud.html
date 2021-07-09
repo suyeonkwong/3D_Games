@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+	function fn_click(param){
+		
+		var id = $(param).text();
+		var name = $(param).next().text();
+		var tel = $(param).next().next().text();
+		var add = $(param).next().next().next().text();
+		
+		$("#idVal").val(id);
+		$("#nameVal").val(name);
+		$("#telVal").val(tel);
+		$("#addVal").val(add);
+		
+		
+		
+// 		var table = document.getElementById("table");
+// 		table.rows[0].cells[0].innerText
+// 		if(param==1){
+// 			var id = table.rows[2].cells[0].innerText;
+// 			document.getElementById("idVal").value = id;
+// 		}else if(param==2){
+// 			var name = this.innerText;
+// 			document.getElementById("nameVal").value = name;
+// 		}else if(param==3){
+// 			var tel = document.getElementById("tel").innerText;
+// 			document.getElementById("telVal").value = tel;
+// 		}else if(param==4){
+// 			var add = document.getElementById("add").innerText;
+// 			document.getElementById("addVal").value = add;
+// 		}
+	}
+	
+	function fn_delete(){
+		$("input").val("");
+	}
+</script>
+</head>
+<body>
+
+<table border="1" id="table">
+	<tr>
+		<td>사번</td>
+		<td>이름</td>
+		<td>전화번호</td>
+		<td>주소</td>
+	</tr>
+{% for e in list %}
+	<tr>
+		<td onclick="fn_click(this)">{{e.e_id}}</td>
+		<td>{{e.e_name}}</td>
+		<td>{{e.tel}}</td>
+		<td>{{e.address}}</td>
+	</tr>
+{% endfor %}
+</table>
+<table border="1">
+	<tr>
+		<td>사번</td>
+		<td><input id="idVal"></td>
+	</tr>
+	<tr>
+		<td>이름</td>
+		<td><input id="nameVal"></td>
+	</tr>
+	<tr>
+		<td>전화번호</td>
+		<td><input id="telVal"></td>
+	</tr>
+	<tr>
+		<td>주소</td>
+		<td><input id="addVal"></td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<button>추가</button>
+			<button>수정</button>
+			<button onclick="fn_delete()">삭제</button>
+		</td>
+	</tr>
+</table>
+</body>
+</html>

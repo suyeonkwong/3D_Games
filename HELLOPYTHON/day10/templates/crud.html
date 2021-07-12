@@ -36,6 +36,19 @@
 // 		}
 	}
 	
+	function fn_setting(e_id,e_name,tel,address){
+		var obj_e_id	= document.getElementById("e_id");
+		var obj_e_name	= document.getElementById("e_name");
+		var obj_tel		= document.getElementById("tel");
+		var obj_address	= document.getElementById("address");
+		
+		obj_e_id.value		= e_id;
+		obj_e_name.value	= e_name;
+		obj_tel.value		= tel;
+		obj_address.value	= address;
+			
+	}
+	
 	function fn_delete(){
 		$("input").val("");
 	}
@@ -52,7 +65,8 @@
 	</tr>
 {% for e in list %}
 	<tr>
-		<td onclick="fn_click(this)">{{e.e_id}}</td>
+<!-- 		<td onclick="fn_click(this)">{{e.e_id}}</td> -->
+		<td><a href="javascript:fn_setting('{{e.e_id}}','{{e.e_name}}','{{e.tel}}','{{e.address}}')">{{e.e_id}}</a></td>
 		<td>{{e.e_name}}</td>
 		<td>{{e.tel}}</td>
 		<td>{{e.address}}</td>
@@ -60,23 +74,39 @@
 {% endfor %}
 </table>
 <table border="1">
-	<tr>
-		<td>사번</td>
-		<td><input id="idVal"></td>
-	</tr>
-	<tr>
-		<td>이름</td>
-		<td><input id="nameVal"></td>
-	</tr>
-	<tr>
-		<td>전화번호</td>
-		<td><input id="telVal"></td>
-	</tr>
-	<tr>
-		<td>주소</td>
-		<td><input id="addVal"></td>
-	</tr>
-	<tr>
+<!-- 	<tr> -->
+<!-- 		<td>사번</td> -->
+<!-- 		<td><input id="idVal"></td> -->
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>이름</td> -->
+<!-- 		<td><input id="nameVal"></td> -->
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>전화번호</td> -->
+<!-- 		<td><input id="telVal"></td> -->
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>주소</td> -->
+<!-- 		<td><input id="addVal"></td> -->
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+		<tr>
+			<td>사번</td>
+			<td><input type="text" id="e_id" /></td>
+		</tr>
+		<tr>
+			<td>이름</td>
+			<td><input type="text" id="e_name" /></td>
+		</tr>
+		<tr>
+			<td>전화번호</td>
+			<td><input type="text" id="tel" /></td>
+		</tr>
+		<tr>
+			<td>주소</td>
+			<td><input type="text" id="address" /></td>
+		</tr>
 		<td colspan="2">
 			<button>추가</button>
 			<button>수정</button>

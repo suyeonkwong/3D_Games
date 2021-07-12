@@ -1,14 +1,16 @@
-from flask import Flask,render_template,request,jsonify
-from day10.mydao_emp import DaoEmp
+from flask import Flask,request,jsonify
+from flask.templating import render_template
+
 
 app = Flask(__name__,static_url_path='', static_folder='static')
 
 @app.route('/')
-def emp():
-    de = DaoEmp()
-    list = de.selectlist()
-    return render_template('crud.html',list=list)
-
+@app.route('/index')
+def home():
+   
+    return render_template('index.html')
+ 
+  
 @app.route('/ajax', methods=['POST'])
 def ajax():
     data = request.get_json()
@@ -16,13 +18,8 @@ def ajax():
 
     return jsonify(result = "success", result2= data)
 
-
 if __name__ == '__main__':
     app.run(debug=True)
-  
-   
-
-
 
 
 

@@ -3,10 +3,111 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="/js/jquery-3.6.0.js" ></script>
+<script src="/js/axios.min.js" ></script>
+<script type="text/javascript">
+function fn_setting(e_id,e_name,tel,address){
+	var obj_e_id	= document.getElementById("e_id");
+	var obj_e_name	= document.getElementById("e_name");
+	var obj_tel		= document.getElementById("tel");
+	var obj_address	= document.getElementById("address");
+	
+	obj_e_id.value		= e_id;
+	obj_e_name.value	= e_name;
+	obj_tel.value		= tel;
+	obj_address.value	= address;
+}
+function fn_insert(){
+    var e_id	= $("#e_id").val();
+    var e_name	= $("#e_name").val();
+    var tel		= $("#tel").val();
+    var address	= $("#address").val();
+
+    axios({
+        method:"POST",
+        url: 'emp_insert.ajax',
+        data:{
+        	'e_id':e_id,
+        	'e_name':e_name,
+        	'tel':tel,
+        	'address':address
+        }
+    }).then((res)=>{
+    	if(res.data.result == "success"){
+    		location.reload()
+    	}else{
+    		alert("추가도중 문제가 생겼습니다.");
+    	}
+        console.log(res.data.result);
+    }).catch(error=>{
+        console.log(error);
+        throw new Error(error);
+    });
+    
+}
+
+function fn_update(){
+	var e_id	= $("#e_id").val();
+    var e_name	= $("#e_name").val();
+    var tel		= $("#tel").val();
+    var address	= $("#address").val();
+
+    axios({
+        method:"POST",
+        url: 'emp_update.ajax',
+        data:{
+        	'e_name':e_name,
+        	'tel':tel,
+        	'address':address,
+        	'e_id':e_id
+        }
+    }).then((res)=>{
+    	if(res.data.result == "success"){
+    		location.reload()
+    	}else{
+    		alert("추가도중 문제가 생겼습니다.");
+    	}
+        console.log(res.data.result);
+    }).catch(error=>{
+        console.log(error);
+        throw new Error(error);
+    });
+}
+
+function fn_delete(){
+	var e_id	= $("#e_id").val();
+    var e_name	= $("#e_name").val();
+    var tel		= $("#tel").val();
+    var address	= $("#address").val();
+
+    axios({
+        method:"POST",
+        url: 'emp_delete.ajax',
+        data:{
+        	'e_id':e_id
+        }
+    }).then((res)=>{
+    	if(res.data.result == "success"){
+    		location.reload()
+    	}else{
+    		alert("추가도중 문제가 생겼습니다.");
+    	}
+        console.log(res.data.result);
+    }).catch(error=>{
+        console.log(error);
+        throw new Error(error);
+    });
+	
+}
+</script>
 </head>
 <body>
 
-<table border="1">
+<table>
+	<tr>
+		<td>
+
+<table border="1px">
 	<tr>
 		<td>사번</td>
 		<td>이름</td>
@@ -15,12 +116,53 @@
 	</tr>
 {% for e in list %}
 	<tr>
-		<td>{{e.e_id}}</td>
+		<td><a href="javascript:fn_setting('{{e.e_id}}','{{e.e_name}}','{{e.tel}}','{{e.address}}')">{{e.e_id}}</a></td>
 		<td>{{e.e_name}}</td>
 		<td>{{e.tel}}</td>
 		<td>{{e.address}}</td>
 	</tr>
 {% endfor %}
 </table>
+
+		</td>
+		<td>
+		
+<table border="1px">
+	<tr>
+		<td>사번</td><td><input type="text" id="e_id" /></td>
+	</tr>
+	<tr>
+		<td>이름</td><td><input type="text" id="e_name" /></td>
+	</tr>
+	<tr>
+		<td>전화번호</td><td><input type="text" id="tel" /></td>
+	</tr>
+	<tr>
+		<td>주소</td><td><input type="text" id="address" /></td>
+	</tr>	
+	<tr>
+		<td colspan="2" >
+			<input type="button" value="추가" onclick="fn_insert()" />
+			<input type="button" value="수정" onclick="fn_update()" />
+			<input type="button" value="삭제" onclick="fn_delete()" />
+
+		</td>
+	</tr>		
+
+</table>
+		
+		
+		
+		
+		</td>	
+		
+	</tr>
+
+
+</table>
+
+
+
+
 </body>
 </html>

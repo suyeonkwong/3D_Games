@@ -6,8 +6,38 @@ class DaoEmp:
                        db='mypydb', charset='utf8')
         self.curs = self.conn.cursor()
         
-    def insert(self):
-        return 1
+    def insert(self,e_id,e_name,tel,address):
+        sql = f"""
+        insert into emp
+         (e_name,tel,address,in_user_id,in_date,up_user_id,up_date)
+        values ('{e_name}','{tel}','{address}','1',DATE_FORMAT(NOW(), '%Y%m%d%H%m%s'),'1',DATE_FORMAT(NOW(), '%Y%m%d%H%m%s'))"""
+        
+        print(sql)
+        self.curs.execute(sql)
+        self.conn.commit()
+        cnt = self.curs.rowcount
+        return cnt
+    
+    def delete(self,e_id):
+        sql = "DELETE FROM emp WHERE e_id=%s"
+        val = (e_id)
+        
+        print(sql)
+        self.curs.execute(sql,val)
+        self.conn.commit()
+        cnt = self.curs.rowcount
+        return cnt
+    
+    def update(self,e_name,tel,address,e_id):
+        sql = "update emp set e_name=%s,tel=%s, address=%s where e_id=%s"
+        val = (e_name, tel, address, e_id)
+        
+        print(sql)
+        print(val)
+        self.curs.execute(sql,val)
+        self.conn.commit()
+        cnt = self.curs.rowcount
+        return cnt
         
     def selectlist(self):
         ret = []

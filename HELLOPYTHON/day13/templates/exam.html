@@ -3,34 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+	table, th, td {
+  		border: 1px solid black;
+  		border-collapse: collapse;
+	}
+	table{
+		width: 100%;
+	}
+</style>
 <script src="/js/jquery-3.6.0.js" ></script>
 <script src="/js/axios.min.js" ></script>
 <script type="text/javascript">
-function fn_setting(e_id,e_name,tel,address){
+function fn_setting(exam_id,e_id,kor,eng,mat){
+	var obj_exam_id	= document.getElementById("exam_id");
 	var obj_e_id	= document.getElementById("e_id");
-	var obj_e_name	= document.getElementById("e_name");
-	var obj_tel		= document.getElementById("tel");
-	var obj_address	= document.getElementById("address");
+	var obj_kor		= document.getElementById("kor");
+	var obj_eng	= document.getElementById("eng");
+	var obj_mat	= document.getElementById("mat");
 	
-	obj_e_id.value		= e_id;
-	obj_e_name.value	= e_name;
-	obj_tel.value		= tel;
-	obj_address.value	= address;
+	obj_exam_id.value	= exam_id;
+	obj_e_id.value	 	= e_id;
+	obj_kor.value		= kor;
+	obj_eng.value		= eng;
+	obj_mat.value		= mat;
 }
 function fn_insert(){
+    var exam_id	= $("#exam_id").val();
     var e_id	= $("#e_id").val();
-    var e_name	= $("#e_name").val();
-    var tel		= $("#tel").val();
-    var address	= $("#address").val();
+    var kor	= $("#kor").val();
+    var eng		= $("#eng").val();
+    var mat	= $("#mat").val();
 
     axios({
         method:"POST",
-        url: 'emp_insert.ajax',
+        url: 'exam_insert.ajax',
         data:{
+        	'exam_id':exam_id,
         	'e_id':e_id,
-        	'e_name':e_name,
-        	'tel':tel,
-        	'address':address
+        	'kor':kor,
+        	'eng':eng,
+        	'mat':mat
         }
     }).then((res)=>{
     	if(res.data.result == "success"){
@@ -47,19 +60,21 @@ function fn_insert(){
 }
 
 function fn_update(){
-	var e_id	= $("#e_id").val();
-    var e_name	= $("#e_name").val();
-    var tel		= $("#tel").val();
-    var address	= $("#address").val();
+	var exam_id	= $("#exam_id").val();
+    var e_id	= $("#e_id").val();
+    var kor	= $("#kor").val();
+    var eng		= $("#eng").val();
+    var mat	= $("#mat").val();
 
     axios({
         method:"POST",
-        url: 'emp_update.ajax',
+        url: 'exam_update.ajax',
         data:{
-        	'e_name':e_name,
-        	'tel':tel,
-        	'address':address,
-        	'e_id':e_id
+        	'e_id':e_id,
+        	'kor':kor,
+        	'eng':eng,
+        	'mat':mat,
+        	'exam_id':exam_id
         }
     }).then((res)=>{
     	if(res.data.result == "success"){
@@ -79,16 +94,17 @@ function fn_delete(){
 	if(!flag){
 		return;
 	}
-	var e_id	= $("#e_id").val();
-    var e_name	= $("#e_name").val();
-    var tel		= $("#tel").val();
-    var address	= $("#address").val();
+	var exam_id	= $("#exam_id").val();
+    var e_id	= $("#e_id").val();
+    var kor	= $("#kor").val();
+    var eng		= $("#eng").val();
+    var mat	= $("#mat").val();
 
     axios({
         method:"POST",
-        url: 'emp_delete.ajax',
+        url: 'exam_delete.ajax',
         data:{
-        	'e_id':e_id
+        	'exam_id':exam_id
         }
     }).then((res)=>{
     	if(res.data.result == "success"){
@@ -107,23 +123,25 @@ function fn_delete(){
 </head>
 <body>
 
-<table>
+<table style="width: 100%">
 	<tr>
 		<td>
 
 <table border="1px">
 	<tr>
-		<td>사번</td>
-		<td>이름</td>
-		<td>전화번호</td>
-		<td>주소</td>
+		<td>시험번호</td>
+		<td>수험생</td>
+		<td>국어</td>
+		<td>영어</td>
+		<td>수학</td>
 	</tr>
 {% for e in list %}
 	<tr>
-		<td><a href="javascript:fn_setting('{{e.e_id}}','{{e.e_name}}','{{e.tel}}','{{e.address}}')">{{e.e_id}}</a></td>
-		<td>{{e.e_name}}</td>
-		<td>{{e.tel}}</td>
-		<td>{{e.address}}</td>
+		<td><a href="javascript:fn_setting('{{e.exam_id}}','{{e.e_id}}','{{e.kor}}','{{e.eng}}','{{e.mat}}')">{{e.exam_id}}</a></td>
+		<td>{{e.e_id}}</td>
+		<td>{{e.kor}}</td>
+		<td>{{e.eng}}</td>
+		<td>{{e.mat}}</td>
 	</tr>
 {% endfor %}
 </table>
@@ -133,16 +151,19 @@ function fn_delete(){
 		
 <table border="1px">
 	<tr>
-		<td>사번</td><td><input type="text" id="e_id" /></td>
+		<td>시험번호</td><td><input type="text" id="exam_id" /></td>
 	</tr>
 	<tr>
-		<td>이름</td><td><input type="text" id="e_name" /></td>
+		<td>수험생</td><td><input type="text" id="e_id" /></td>
 	</tr>
 	<tr>
-		<td>전화번호</td><td><input type="text" id="tel" /></td>
+		<td>국어</td><td><input type="text" id="kor" /></td>
 	</tr>
 	<tr>
-		<td>주소</td><td><input type="text" id="address" /></td>
+		<td>영어</td><td><input type="text" id="eng" /></td>
+	</tr>
+	<tr>
+		<td>수학</td><td><input type="text" id="mat" /></td>
 	</tr>	
 	<tr>
 		<td colspan="2" >

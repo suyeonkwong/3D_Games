@@ -1,63 +1,72 @@
 from ursina import *
-import tkinter as tk
-from tkinter import messagebox
+import tkinter as tks
 from sqlalchemy.sql.expression import false
  
 arr2D = [
-                [0,0,0,0,0, 0,0,0,0,0],
-                [0,0,0,0,0, 0,0,0,0,0],
-                [0,0,0,0,0, 0,0,0,0,0],
-                [0,0,0,0,0, 0,0,0,0,0],
-                [0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
                 
-                [0,0,0,0,0, 0,0,0,0,0],
-                [0,0,0,0,0, 0,0,0,0,0],
-                [0,0,0,0,0, 0,0,0,0,0],
-                [0,0,0,0,0, 0,0,0,0,0],
-                [0,0,0,0,0, 0,0,0,0,0]
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0]
             ]
 pb2D = []
 flag_wb = [True]
 flag_ing = [True]
 
-
 app = Ursina()
-# camera.orthographic = True
-camera.z = -50
+
+camera.y = 60
+camera.z= 0
+camera.rotation_x = 90
+
 
 def myreset():
     print("myreset")
     #txt.visible = False
     flag_ing[0] = True
     flag_wb[0] = True
-    for i in range(10):
-        for j in range(10):
+    for i in range(19):
+        for j in range(19):
             arr2D[i][j] = 0
     myrender()
+    txt_V.enabled = False
             
 def myclose():
     print("myclose")
-    txt_V.visible = False
     txt_V.enabled = False
 
 Text.default_resolution = 1080 * Text.size
 txt = Button(text='RESET', origin=(-6,-8), scale=(0.1,0.05,1), background=True,on_click=myreset)
-txt_V = Button(text='victory', origin=(0,0), scale=(0.1,0.05,1), background=True,on_click=myclose,visible=False, enabled=False)
+txt_V = Button(text='victory', origin=(0,0), scale=(0.1,0.05,1), background=True,on_click=myclose,enabled=False)
 
 
 
 def myrender():
-    for i in range(10):
-        for j in range(10):
+    for i in range(19):
+        for j in range(19):
             if arr2D[i][j] == 0:
-                pb2D[i][j].z = 0.7
+                pb2D[i][j].y = -0.7
             if arr2D[i][j] == 1:
-                pb2D[i][j].z = -0.7
+                pb2D[i][j].y = 0.7
                 pb2D[i][j].color = color.white
             if arr2D[i][j] == 2:
-                pb2D[i][j].z = -0.7
+                pb2D[i][j].y = 0.7
                 pb2D[i][j].color = color.black
-                
                 
 def getUP(i,j,stone):
         
@@ -251,38 +260,39 @@ def myclick(i,j):
                 #messagebox.showinfo("Omok", "흰돌승리!!")
                 #QtWidgets.QMessageBox.information("Omok", "흰돌")
                 txt_V.text = "victory white"
-                txt_V.visible = True
                 txt_V.enabled = True
             else:
                 #messagebox.showinfo("Omok", "흑돌승리!!")
                 #QtWidgets.QMessageBox.information("Omok", "흑돌")
                 txt_V.text = "victory balck"
-                txt_V.visible = True
                 txt_V.enabled = True
             flag_ing[0] = False
     
     flag_wb[0] = not flag_wb[0]
-        
-for i in range(10):
+   
+   
+   
+for i in range(20):
     line = []
-    for j in range(10):
+    for j in range(20):
         pb = Entity(model='cube', texture='0',collider='box', on_click=Func(myclick, i,j))
-        pb.x = j - 4.5
-        pb.y = -i + 4.5
+        pb.x = j - 9
+        pb.z = -i + 9
         
-        sp = Entity(model='sphere', color=color.black, scale=(0.8,0.8,0.2))
-        sp.z = 0.7
-        sp.x = j - 4.5
-        sp.y = -i + 4.5
+        sp = Entity(model='sphere', color=color.black, scale=(0.8,0.2,0.8))
+        sp.y = -0.7
+        sp.x = j - 9
+        sp.z = -i + 9
         line.append(sp)
     pb2D.append(line)
     
 
 
 def update():   # update gets automatically called.
-    camera.rotation_z += held_keys['d'] * 1
-    camera.rotation_z -= held_keys['a'] * 1
-    
+    if flag_ing[0] == True:
+        camera.rotation_y = camera.rotation_y+0.1
+  
+  
 myrender()
 
 app.run()   # opens a window and starts the game.

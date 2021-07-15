@@ -3,18 +3,28 @@ import tkinter as tk
 from tkinter import messagebox
 from sqlalchemy.sql.expression import false
  
+
 arr2D = [
-                [0,0,0,0,0, 0,0,0,0,0],
-                [0,0,0,0,0, 0,0,0,0,0],
-                [0,0,0,0,0, 0,0,0,0,0],
-                [0,0,0,0,0, 0,0,0,0,0],
-                [0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
                 
-                [0,0,0,0,0, 0,0,0,0,0],
-                [0,0,0,0,0, 0,0,0,0,0],
-                [0,0,0,0,0, 0,0,0,0,0],
-                [0,0,0,0,0, 0,0,0,0,0],
-                [0,0,0,0,0, 0,0,0,0,0]
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0],
+                [0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0]
             ]
 pb2D = []
 flag_wb = [True]
@@ -23,15 +33,15 @@ flag_ing = [True]
 
 app = Ursina()
 # camera.orthographic = True
-camera.z = -50
+camera.z = -70
 
 def myreset():
     print("myreset")
     #txt.visible = False
     flag_ing[0] = True
     flag_wb[0] = True
-    for i in range(10):
-        for j in range(10):
+    for i in range(19):
+        for j in range(19):
             arr2D[i][j] = 0
     myrender()
             
@@ -47,8 +57,8 @@ txt_V = Button(text='victory', origin=(0,0), scale=(0.1,0.05,1), background=True
 
 
 def myrender():
-    for i in range(10):
-        for j in range(10):
+    for i in range(19):
+        for j in range(19):
             if arr2D[i][j] == 0:
                 pb2D[i][j].z = 0.7
             if arr2D[i][j] == 1:
@@ -263,17 +273,17 @@ def myclick(i,j):
     
     flag_wb[0] = not flag_wb[0]
         
-for i in range(10):
+for i in range(20):
     line = []
-    for j in range(10):
+    for j in range(20):
         pb = Entity(model='cube', texture='0',collider='box', on_click=Func(myclick, i,j))
-        pb.x = j - 4.5
-        pb.y = -i + 4.5
+        pb.x = j - 9
+        pb.y = -i + 9
         
         sp = Entity(model='sphere', color=color.black, scale=(0.8,0.8,0.2))
         sp.z = 0.7
-        sp.x = j - 4.5
-        sp.y = -i + 4.5
+        sp.x = j - 9
+        sp.y = -i + 9
         line.append(sp)
     pb2D.append(line)
     
